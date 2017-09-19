@@ -1,7 +1,9 @@
 public class Main {
+    private static final int numberOfRepeats = 100;
+    private static final int numberOfDoors = 3;
+
+
     public static void main(String[] args) {
-        int numberOfRepeats = 100;
-        int numberOfDoors = 3;
         int winsWithNoChangeOfDoor = 0;
         int winsWithChangeOfDoor = 0;
 

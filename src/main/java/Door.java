@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class Door {
-    private static final int ZONK = 0;
-    private static final int WIN = 1;
+    static final int ZONK = 0;
+    static final int WIN = 1;
 
     public static final int SELECTABLE = 0;
     public static final int SELECTED = 1;
@@ -11,7 +11,7 @@ public class Door {
     private int statusOfSelection;
     private int valueBehindTheDoor;
 
-    private Door(){
+    Door(){
         statusOfSelection = SELECTABLE;
         valueBehindTheDoor = ZONK;
     }
@@ -36,7 +36,7 @@ public class Door {
         this.statusOfSelection = statusOfSelection;
     }
 
-    public void setValueBehindTheDoor(int valueBehindTheDoor) {
+    void setValueBehindTheDoor(int valueBehindTheDoor) {
         this.valueBehindTheDoor = valueBehindTheDoor;
     }
 
