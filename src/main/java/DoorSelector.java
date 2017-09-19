@@ -1,63 +1,78 @@
 public class DoorSelector {
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Deklaration der Konstanten und Attribute
+    ///////////////////////////////////////////////////////////////////////////
     public static final int FIRST_DOOR = 0;
     public static final int SECOND_DOOR = 1;
     public static final int THIRD_DOOR = 2;
 
     Door[] doors;
-    private boolean hasADoorSelected;
+    private boolean hasDoorSelected;
     private boolean doorHasBeenChanged;
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Konstruktoren, Getter und Setter
+    ///////////////////////////////////////////////////////////////////////////
     public DoorSelector() {
         doors = Door.getThreeDoors();
-        hasADoorSelected = false;
+        hasDoorSelected = false;
         doorHasBeenChanged = false;
     }
 
-    public boolean hasADoorSelected() {
-        return hasADoorSelected;
+    public boolean hasDoorSelected() {
+        return hasDoorSelected;
     }
 
     public boolean doorHasBeenChanged() {
         return doorHasBeenChanged;
     }
 
-    public boolean selectADoor(int doorIndex) {
-        if (!hasADoorSelected()) {
-            doors[doorIndex].setStatusOfSelection(Door.SELECTED);
-            hasADoorSelected = true;
+    ///////////////////////////////////////////////////////////////////////////
+    // Arbeitsmethoden
+    ///////////////////////////////////////////////////////////////////////////
+    public boolean selectDoor(final int doorIndex) {
+        if (hasDoorSelected()) return false;
 
-            for (int i = 0; i < doors.length; i++) {
-                Door doorToOpen = doors[i];
-                if (i != doorIndex) {
-                    if (!doorToOpen.isWin()) {
-                        doors[i].setStatusOfSelection(Door.OPENED);
-                        break;
-                    }
-                }
+        doors[doorIndex].setStatusOfSelection(Door.SELECTED);
+        hasDoorSelected = true;
+        openDoorWithNoWin();
+
+
+        return true;
+    }
+
+    private void openDoorWithNoWin() {
+        int currentIndex = 0;
+        for (Door door : doors) {
+            if (doors[currentIndex].isSelectable() && !doors[currentIndex].isWin()) {
+                doors[currentIndex++].setStatusOfSelection(Door.OPENED);
+                break;
             }
-            return true;
         }
-        return false;
     }
 
     public boolean changeYourDoor() {
-        if (!doorHasBeenChanged()) {
-            for (int i = 0; i < doors.length; i++) {
-                if (doors[i].isSelected()) doors[i].setStatusOfSelection(Door.SELECTABLE);
-                else if (doors[i].isSelectable()) doors[i].setStatusOfSelection(Door.SELECTED);
-            }
-            doorHasBeenChanged = true;
-            return true;
+        if (doorHasBeenChanged()) return false;
+
+        int currentIndex = 0;
+        for (Door door : doors) {
+            switchSelectableStatusOfDoor(currentIndex++);
         }
-        return false;
+        doorHasBeenChanged = true;
+
+        return true;
     }
 
-    public boolean openDoorsAndCheckForWin() {
-        if (hasADoorSelected()) {
-            for (Door door : doors) {
-                if (door.isSelected() && door.isWin()) {
-                    return true;
-                }
+    private void switchSelectableStatusOfDoor(final int indexOfDoor) {
+        if (doors[indexOfDoor].isSelected()) doors[indexOfDoor].setStatusOfSelection(Door.SELECTABLE);
+        else if (doors[indexOfDoor].isSelectable()) doors[indexOfDoor].setStatusOfSelection(Door.SELECTED);
+    }
+
+    public boolean checkIfYouWinWithThisSelection() {
+        for (Door door : doors) {
+            if (door.isSelected() && door.isWin()) {
+                return true;
             }
         }
         return false;

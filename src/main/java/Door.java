@@ -11,7 +11,7 @@ public class Door {
     private int statusOfSelection;
     private int valueBehindTheDoor;
 
-    Door(){
+    Door() {
         statusOfSelection = SELECTABLE;
         valueBehindTheDoor = ZONK;
     }
@@ -28,32 +28,32 @@ public class Door {
         return statusOfSelection == OPENED;
     }
 
-    public boolean isWin(){
+    public boolean isWin() {
         return valueBehindTheDoor == WIN;
     }
 
-    public void setStatusOfSelection(int statusOfSelection) {
+    public void setStatusOfSelection(final int statusOfSelection) {
         this.statusOfSelection = statusOfSelection;
     }
 
-    void setValueBehindTheDoor(int valueBehindTheDoor) {
+    void setValueBehindTheDoor(final int valueBehindTheDoor) {
         this.valueBehindTheDoor = valueBehindTheDoor;
     }
 
-    public static Door[] getThreeDoors(){
-        Door[] doors = new Door[3];
+    public static Door[] getThreeDoors() {
+        final int numberOfdoors = 3;
+        final Door[] doors = new Door[numberOfdoors];
         for (int i = 0; i < doors.length; i++) {
             doors[i] = new Door();
         }
-        Random random = new Random();
 
-        int doorToSetWinInto = random.nextInt(3);
+        final Random random = new Random();
+        final int doorToSetWinInto = random.nextInt(numberOfdoors);
+
         doors[doorToSetWinInto].setValueBehindTheDoor(WIN);
 
         return doors;
     }
-
-
 
 
 }

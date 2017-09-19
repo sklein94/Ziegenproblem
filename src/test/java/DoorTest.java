@@ -53,7 +53,7 @@ public class DoorTest {
            for (Door door : doors) {
                if (door.isWin()) count++;
            }
-           assertTrue(count == 1);
+           assertEquals(1, count);
         }
     }
 
@@ -65,7 +65,7 @@ public class DoorTest {
             for (Door door : doors) {
                 if (door.isSelectable()) count++;
             }
-            assertTrue(count == 3);
+            assertEquals(3, count);
         }
     }
 
