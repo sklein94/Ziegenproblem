@@ -47,19 +47,19 @@ public class DoorTest {
 
     @Test
     public void threeDoorsHaveExactlyOneWin() throws Exception {
-        for (int i = 0; i < 1000; i++){
-           Door[] doors = Door.getThreeDoors();
-           int count = 0;
-           for (Door door : doors) {
-               if (door.isWin()) count++;
-           }
-           assertEquals(1, count);
+        for (int i = 0; i < 1000; i++) {
+            Door[] doors = Door.getThreeDoors();
+            int count = 0;
+            for (Door door : doors) {
+                if (door.isWin()) count++;
+            }
+            assertEquals(1, count);
         }
     }
 
     @Test
-    public void allDoorsSelectableAtStart() {
-        for (int i = 0; i < 1000; i++){
+    public void allDoorsSelectableAtStart() throws Exception {
+        for (int i = 0; i < 1000; i++) {
             Door[] doors = Door.getThreeDoors();
             int count = 0;
             for (Door door : doors) {
@@ -68,5 +68,29 @@ public class DoorTest {
             assertEquals(3, count);
         }
     }
+
+    //ADDED ON 21.09.2017, 10:07 [sklein]
+    @Test
+    public void quantityOfWinEqualsAlmostOnEachDoor() throws Exception {
+        double doorOneWins = 0;
+        double doorTwoWins = 0;
+        double doorThreeWins = 0;
+
+        for (int i = 0; i < 10000; i++) {
+            if (checkIfWinWithThisSelection(DoorSelector.FIRST_DOOR)) doorOneWins++;
+            if (checkIfWinWithThisSelection(DoorSelector.SECOND_DOOR)) doorOneWins++;
+            if (checkIfWinWithThisSelection(DoorSelector.THIRD_DOOR)) doorOneWins++;
+        }
+
+        assertEquals(doorOneWins, doorTwoWins, 200);
+        assertEquals(doorTwoWins, doorThreeWins, 200);
+    }
+
+    private boolean checkIfWinWithThisSelection(int doorIndex) {
+        DoorSelector selector = new DoorSelector();
+        selector.selectDoor(doorIndex);
+        return selector.checkIfYouWinWithThisSelection();
+    }
+
 
 }

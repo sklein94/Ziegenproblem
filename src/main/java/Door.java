@@ -48,9 +48,9 @@ public class Door {
         }
 
         final Random random = new Random();
-        final int doorToSetWinInto = random.nextInt(numberOfdoors);
+        final int doorToPutWinInto = random.nextInt(numberOfdoors);
 
-        doors[doorToSetWinInto].setValueBehindTheDoor(WIN);
+        doors[doorToPutWinInto].setValueBehindTheDoor(WIN);
 
         return doors;
     }
